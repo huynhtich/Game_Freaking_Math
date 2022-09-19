@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:weightSum="5"
+    android:weightSum="2"
+    android:gravity="center"
     android:orientation="vertical"
     android:background="#58B7F7">
 
@@ -19,50 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
-    <TextView
-        android:id="@+id/textviewMessage"
-        android:gravity="center"
-        android:textSize="40sp"
-        android:textColor="#fff"
-        tools:text="Max score: 100"
-        android:textStyle="bold"
-        android:layout_weight="0.5"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
 
-    <TextView
-        android:id="@+id/textviewQuestion"
-        android:gravity="center"
-        android:textSize="80sp"
-        android:textColor="#fff"
-        android:text="11 + 22 = 44"
-        android:textStyle="bold"
-        android:layout_weight="2.5"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_Play"
+        android:layout_weight="0.1"
+        android:text="Bắt đầu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-    <LinearLayout
-        android:weightSum="2"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:padding="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnWrong"
-            android:background="@drawable/btnfalse"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnTrue"
-            android:background="@drawable/btntrue"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </LinearLayout>
 
 </LinearLayout>
