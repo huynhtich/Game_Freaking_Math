@@ -17,7 +17,7 @@
         android:textColor="#fff"
         tools:text="Max score: 100"
         android:textStyle="bold"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
@@ -39,7 +39,7 @@
         android:textColor="#FFFDF7C3"
         tools:text="= 44"
         android:textStyle="bold"
-        android:layout_weight="2"
+        android:layout_weight="2.5"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 

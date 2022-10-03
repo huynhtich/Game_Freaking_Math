@@ -30,6 +30,7 @@ public class LevelModel {
 
     public static final int MAX_OPERATOR_EASY = 5;
     public static final int MAX_OPERATOR_MEDIUM = 10;
-    public static final int MAX_OPERATOR_HARD = 30;
-    public static final int[] arrMaxOperatorValue = {MAX_OPERATOR_EASY, MAX_OPERATOR_MEDIUM, MAX_OPERATOR_HARD};
+    public static final int MAX_OPERATOR_HARD = 20;
+    public static final int MAX_OPERATOR_EXCELLENT = 50;
+    public static final int[] arrMaxOperatorValue = {MAX_OPERATOR_EASY, MAX_OPERATOR_MEDIUM, MAX_OPERATOR_HARD, MAX_OPERATOR_EXCELLENT};
 }

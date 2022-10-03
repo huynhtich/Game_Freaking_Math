@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -26,9 +27,12 @@ public class PlayActivity extends AppCompatActivity {
     Timer timer;
     TimerTask timerTask;
 
+    private int intervalDelay = 1200;
     private int score = 0;
     private LevelModel model;
     private Random rand;
+    private String strMessage = "";
+    private int maxScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,28 +55,28 @@ public class PlayActivity extends AppCompatActivity {
         rand = new Random();
 
         //Tao cau hoi dau tien
-        model = GenerateLevel.generateLevel(1);
+        model = GenerateLevel.generateLevel(0);
+
         displayNewLevel(model);
 
-        createTimerTask();
+        createTimerTask(intervalDelay);
 
         btnCorrect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClick(view);
+                onClickView(view);
             }
         });
 
         btnWrong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClick(view);
+                onClickView(view);
             }
         });
 
 
     }
-
 
     private void displayNewLevel(LevelModel model) {
         tvQuestion.setText(model.strOperator);
@@ -80,15 +84,22 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void nextLevel(int score) {
+
+        tvScore.setText("Score: " + score + " Best: " + maxScore);
+
         cancelTimer();
 
-        createTimerTask();
-
         model = GenerateLevel.generateLevel(score);
+        if (model.difficultLevel == 2)
+            intervalDelay = 1500;
+        else if (model.difficultLevel == 3)
+            intervalDelay = 1500;
+
+        createTimerTask(intervalDelay);
         displayNewLevel(model);
     }
 
-    private void createTimerTask() {
+    private void createTimerTask(int interval) {
         timer = new Timer();
 
         timerTask = new TimerTask() {
@@ -97,15 +108,16 @@ public class PlayActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        strMessage = "Suy nghĩ lâu quá!!";
                         showGameOver(score);
                     }
                 });
             }
         };
-        timer.schedule(timerTask, 3000);
+        timer.schedule(timerTask, 5000);
     }
 
-    public void onClick(View v) {
+    public void onClickView(View v) {
         int id = v.getId();
 
         if (id == R.id.btn_Correct) {
@@ -115,6 +127,7 @@ public class PlayActivity extends AppCompatActivity {
                 nextLevel(score);
 
             } else {
+                strMessage = "Bạn chọn sai!";
                 showGameOver(score);
             }
         }
@@ -126,6 +139,7 @@ public class PlayActivity extends AppCompatActivity {
                 nextLevel(score);
 
             } else {
+                strMessage = "Nhầm rồi!";
                 showGameOver(score);
             }
         }
@@ -138,9 +152,14 @@ public class PlayActivity extends AppCompatActivity {
 
         cancelTimer();
 
+        if (score > maxScore) {
+            maxScore = score;
+        }
+        //tvScore.setText(maxScore + "");
+
         new AlertDialog.Builder(this)
                 .setTitle("Game over")
-                .setMessage("Your score : " + score)
+                .setMessage(strMessage + " Điểm : " + score)
                 .setPositiveButton("Replay", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -149,7 +168,7 @@ public class PlayActivity extends AppCompatActivity {
                         btnCorrect.setEnabled(true);
                         btnWrong.setEnabled(true);
 
-                        tvScore.setText("0");
+                        tvScore.setText(maxScore + "");
                         PlayActivity.this.score = 0;
                         PlayActivity.this.nextLevel(PlayActivity.this.score);
 
@@ -160,14 +179,13 @@ public class PlayActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
+                        startActivity(new Intent(PlayActivity.this, MainActivity.class));
                         PlayActivity.this.finish();
 
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-
-
     }
 
     private void cancelTimer() {
